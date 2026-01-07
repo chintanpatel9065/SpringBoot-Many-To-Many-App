@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/all.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas"></i>Student-Course System
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="@{/students}">Students</a>
+                <a class="nav-link active" href="@{/courses}">Courses</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold"><i class="fas"></i>Courses</h2>
+            <a th:href="@{/courses/new}" class="btn btn-success">
+                <i class="fas fa-plus"></i>Add New Course
+            </a>
+        </div>
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
+            <strong>Success!</strong> <span th:text="${successMessage}">Success Message</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <form th:action="@{/courses}" method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Search by name or code..." />
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="fas"></i>Search
+                </button>
+                <a th:href="@{/courses}" class="btn btn-outline-secondary">
+                    <i class="fas"></i>Clear
+                </a>
+            </div>
+        </form>
+        <div class="row">
+            <div th:each="course : ${courses}" class="col-md-6 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${course.courseName}"></h5>
+                        <p class="text-muted mb-2">
+                            <strong>Code:</strong> <span th:text="${course.courseCode}"></span>
+                        </p>
+                        <p class="card-text" th:text="${course.description}"></p>
+                        <div>
+                            <a th:href="@{/courses/{courseId}/viewStudents(courseId=${course.courseId})}" class="btn btn-sm btn-info">
+                                <i class="fas"></i> View Students
+                            </a>
+                            <a th:href="@{/courses/{courseId}/viewEnrollmentsHistory(courseId=${course.courseId})}" class="btn btn-sm btn-secondary">
+                                <i class="fas"></i> View Enrollment History
+                            </a>
+                            <a th:href="@{/courses/getCourse/courseId(courseId=${course.courseId})}" class="btn btn-sm btn-warning">
+                                <i class="fas"></i> Edit
+                            </a>
+                            <a th:href="@{/courses/deleteCourse/courseId(courseId=${course.courseId})}" class="btn btn-sm btn-danger">
+                                <i class="fas"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${#lists.isEmpty(courses)}">
+                <div class="alert alert-info">
+                    <i class="fas"></i>No courses found!
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
