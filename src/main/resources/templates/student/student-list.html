@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/all.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas"></i>Student-Course System
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link active" href="@{/students}">Students</a>
+                <a class="nav-link" href="@{/courses}">Courses</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold"><i class="fas"></i>Students</h2>
+            <a th:href="@{/students/new}" class="btn btn-success">
+                <i class="fas fa-plus"></i>Add New Student
+            </a>
+        </div>
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> <span th:text="${successMessage}">Success Message</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <form th:action="@{/students}" method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Search by name or email..." />
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="fas"></i>Search
+                </button>
+                <a th:href="@{/students}" class="btn btn-outline-secondary">
+                    <i class="fas"></i>Clear
+                </a>
+            </div>
+        </form>
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>MobileNumber</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="student : ${students}">
+                                <td th:text="${student.name}"></td>
+                                <td th:text="${student.email}"></td>
+                                <td th:text="${student.mobileNumber}"></td>
+                                <td>
+                                    <a th:href="@{/students/{studentId}/courses(studentId=${student.studentId})}" class="btn btn-sm btn-info">
+                                        <i class="fas"></i>Manage Courses
+                                    </a>
+                                    <a th:href="@{/students/{studentId}/viewEnrollmentHistory(studentId=${student.studentId})}" class="btn btn-secondary btn-sm">
+                                        <i class="fas"></i>View Enrollment History
+                                    </a>
+                                    <a th:href="@{/students/getStudent/{studentId}(studentId=${student.studentId})}" class="btn btn-warning btn-sm">
+                                        <i class="fas"></i>Edit
+                                    </a>
+                                    <a th:href="@{/students/deleteStudent/{studentId}(studentId=${student.studentId})}" class="btn btn-sm btn-danger">
+                                        <i class="fas"></i>Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
