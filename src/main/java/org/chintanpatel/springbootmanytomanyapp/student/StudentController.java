@@ -60,7 +60,7 @@ public class StudentController {
     // Create a method for inserting or updating a student
 
     @PostMapping("/students/insertOrUpdateStudent")
-    public String insertOrUpdateStudent(@Valid @ModelAttribute("student")Student student, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String insertOrUpdateStudent(@Valid @ModelAttribute("student")Student student, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "student/student-form";
         }
@@ -115,27 +115,27 @@ public class StudentController {
     // Create a method for enrolling a student in a course
 
     @PostMapping("/students/{studentId}/enrollCourse/{courseId}")
-    public String enrollStudent(@PathVariable Long studentId, @PathVariable Long courseId, RedirectAttributes redirectAttributes) {
+    public String enrolledStudent(@PathVariable Long studentId, @PathVariable Long courseId, RedirectAttributes redirectAttributes) {
         try {
             enrollmentService.enrollStudents(studentId, courseId);
             redirectAttributes.addFlashAttribute("successMessage", "Student enrolled successfully");
         }catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage",e.getMessage());
         }
-        return "redirect:/students/{studentId}/courses";
+        return "redirect:/students/" + studentId + "/courses";
     }
 
     // Create a method for unenrolling a student from a course
 
     @PostMapping("/students/{studentId}/unenrollCourse/{courseId}")
-    public String unenrollStudent(@PathVariable Long studentId, @PathVariable Long courseId, RedirectAttributes redirectAttributes) {
+    public String unenrolledStudent(@PathVariable Long studentId, @PathVariable Long courseId, RedirectAttributes redirectAttributes) {
         try {
             enrollmentService.unenrollStudents(studentId, courseId);
             redirectAttributes.addFlashAttribute("successMessage", "Student unenrolled successfully");
         }catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage",e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
-        return "redirect:/students/{studentId}/courses";
+        return "redirect:/students/" + studentId + "/courses";
     }
 
     // Create a method for viewing the enrollment history of a student

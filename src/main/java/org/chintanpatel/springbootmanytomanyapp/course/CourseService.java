@@ -9,11 +9,11 @@ public interface CourseService {
 
     List<Course>getAllCourseList();
 
-    Optional<Course> getCourseById(Long courseId);
+    Optional<Course>getCourseById(Long courseId);
 
     void deleteCourseById(Long courseId);
 
     boolean isCourseCodeExist(String courseCode);
 
-    List<Course> searchCourses(String keyword);
+    List<Course>searchCourses(String keyword);
 }

@@ -9,11 +9,11 @@ public interface StudentService {
 
     List<Student>getAllStudentList();
 
-    Optional<Student> getStudentById(Long studentId);
+    Optional<Student>getStudentById(Long studentId);
 
     void deleteStudentById(Long studentId);
 
     boolean isEmailExist(String email);
 
-    List<Student> searchStudents(String keyword);
+    List<Student>searchStudents(String keyword);
 }

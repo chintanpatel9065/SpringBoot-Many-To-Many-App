@@ -22,12 +22,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getAllStudentList() {
+    public List<Student>getAllStudentList() {
         return studentRepository.findAll();
     }
 
     @Override
-    public Optional<Student> getStudentById(Long studentId) {
+    public Optional<Student>getStudentById(Long studentId) {
         return studentRepository.findById(studentId);
     }
 
@@ -42,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> searchStudents(String keyword) {
+    public List<Student>searchStudents(String keyword) {
         return studentRepository.searchStudents(keyword);
     }
 }

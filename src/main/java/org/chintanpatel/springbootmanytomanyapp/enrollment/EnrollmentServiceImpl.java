@@ -26,22 +26,22 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     }
 
     @Override
-    public List<Enrollment> getActiveEnrollmentsByStudent(Long studentId) {
+    public List<Enrollment>getActiveEnrollmentsByStudent(Long studentId) {
         return enrollmentRepository.findActiveEnrollmentsByStudentId(studentId);
     }
 
     @Override
-    public List<Enrollment> getActiveEnrollmentsByCourse(Long courseId) {
+    public List<Enrollment>getActiveEnrollmentsByCourse(Long courseId) {
         return enrollmentRepository.findActiveEnrollmentsByCourseId(courseId);
     }
 
     @Override
-    public List<Enrollment> getAllEnrollmentsByStudent(Long studentId) {
+    public List<Enrollment>getAllEnrollmentsByStudent(Long studentId) {
         return enrollmentRepository.findAllEnrollmentsByStudentId(studentId);
     }
 
     @Override
-    public List<Enrollment> getAllEnrollmentsByCourse(Long courseId) {
+    public List<Enrollment>getAllEnrollmentsByCourse(Long courseId) {
         return enrollmentRepository.findAllEnrollmentsByCourseId(courseId);
     }
 
