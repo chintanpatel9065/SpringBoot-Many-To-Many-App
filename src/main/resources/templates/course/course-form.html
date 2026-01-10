@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/all.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas"></i>Student-Course System
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="@{/students}">Students</a>
+                <a class="nav-link active" href="@{/courses}">Courses</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error!</strong> <span th:text="${errorMessage}">Error Message</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">
+                            <i class="fas"></i>
+                            <span th:text="${course.courseId != null ? 'Edit Course':'Add Course'}">Course Form</span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/courses/insertOrUpdateCourse}" method="post" th:object="${course}">
+                            <input type="hidden" th:field="*{courseId}" />
+                            <div class="mb-3">
+                                <label class="form-label">CourseName</label>
+                                <input type="text" class="form-control" th:field="*{courseName}" th:classappend="${#fields.hasErrors('courseName')} ? 'is-invalid' : ''" />
+                                <div th:if="${#fields.hasErrors('courseName')}" class="invalid-feedback" th:errors="*{courseName}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">CourseCode</label>
+                                <input type="text" class="form-control" th:field="*{courseCode}" th:classappend="${#fields.hasErrors('courseCode')} ? 'is-invalid' : ''" />
+                                <div th:if="${#fields.hasErrors('courseCode')}" class="invalid-feedback" th:errors="*{courseCode}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" th:field="*{description}" rows="5" cols="38" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"></textarea>
+                                <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback" th:errors="*{description}"></div>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a th:href="@{/courses}" class="btn btn-secondary">
+                                    <i class="fas"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas"></i>Save
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
