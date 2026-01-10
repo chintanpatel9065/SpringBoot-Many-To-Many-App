@@ -21,11 +21,11 @@ public class Enrollment {
     @Column(name = "student_course_id", nullable = false)
     private Long enrollmentId;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
