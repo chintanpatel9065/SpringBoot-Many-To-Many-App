@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Enrollment History</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/all.min.css}" type="text/css"/>
+    <script th:src="@{/js/bootstrap.bundle.min.js}" type="text/javascript"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas"></i>Student-Course System
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link active" th:href="@{/students}">Students</a>
+                <a class="nav-link" th:href="@{/courses}">Courses</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i class="fas"></i>
+                Enrollment History for <span th:text="${student.name}"></span>
+            </h2>
+            <a th:href="@{/students}" class="btn btn-secondary">
+                <i class="fas"></i>Back to Students
+            </a>
+        </div>
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="fas"></i>Complete Enrollment History
+                </h5>
+            </div>
+            <div class="card-body">
+                <div th:if="${#lists.isEmpty(allEnrollmentsByStudent)}" class="text-muted text-center py-4">
+                    <i class="fas mb-3"></i>
+                    <p class="lead">No enrollment history was available for this student</p>
+                </div>
+                <div class="table-responsive" th:unless="${#lists.isEmpty(allEnrollmentsByStudent)}">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Course Code</th>
+                                <th>Enrolled Date</th>
+                                <th>Unenrolled Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="enrollment : ${allEnrollmentsByStudent}">
+                                <td th:text="${enrollment.course.courseName}"></td>
+                                <td th:text="${enrollment.course.courseCode}"></td>
+                                <td>
+                                    <i class="fas"></i>
+                                    <span th:text="${#temporals.format(enrollment.enrolledDate, 'MMM dd, yyyy HH:mm')}"></span>
+                                </td>
+                                <td>
+                                    <span th:if="${enrollment.unenrolledDate != null}">
+                                        <i class="fas"></i>
+                                        <span th:text="${#temporals.format(enrollment.unenrolledDate, 'MMM dd, yyyy HH:mm')}"></span>
+                                    </span>
+                                    <span th:if="${enrollment.unenrolledDate == null}" class="text-muted"></span>
+                                </td>
+                                <td>
+                                    <span th:if="${enrollment.status == 'ACTIVE'}" class="badge bg-success">
+                                        <i class="fas"></i>Active
+                                    </span>
+                                    <span th:unless="${enrollment.status == 'ACTIVE'}" class="badge bg-danger">
+                                        <i class="fas"></i>Unenrolled
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
