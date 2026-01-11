@@ -61,7 +61,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     public void unenrollStudents(Long studentId, Long courseId) {
         Enrollment enrollment = enrollmentRepository.findActiveEnrollments(studentId, courseId).orElseThrow(() -> new RuntimeException("Student not enrolled in this course"));
         enrollment.setStatus("UNENROLLED");
-        enrollment.setEnrolledDate(LocalDateTime.now());
+        enrollment.setUnenrolledDate(LocalDateTime.now());
         enrollmentRepository.save(enrollment);
     }
 }
