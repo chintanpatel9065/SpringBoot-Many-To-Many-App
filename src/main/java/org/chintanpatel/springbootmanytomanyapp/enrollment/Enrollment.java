@@ -18,7 +18,7 @@ public class Enrollment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_course_id", nullable = false)
+    @Column(name = "enrollment_id", nullable = false)
     private Long enrollmentId;
 
     @ManyToOne
