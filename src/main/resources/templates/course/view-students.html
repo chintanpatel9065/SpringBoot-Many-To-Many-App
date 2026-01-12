@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Students</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/all.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas"></i>Student-Course System
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" th:href="@{/students}">Students</a>
+                <a class="nav-link active" th:href="@{/courses}">Courses</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i class="fas"></i>
+                Students Enrolled in <span th:text="${course.courseName}"></span>
+            </h2>
+            <div>
+                <a th:href="@{/courses/{courseId}/viewEnrollmentHistory(courseId=${course.courseId})}" class="btn btn-info">
+                    <i class="fas"></i>View Enrollment History
+                </a>
+                <a th:href="@{/courses}" class="btn btn-secondary">
+                    <i class="fas"></i>Back to Courses
+                </a>
+            </div>
+        </div>
+        <div class="card shadow mb-3">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="fas"></i>Course Details
+                </h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Code : </strong><span th:text="${course.courseCode}"></span></p>
+                <p><strong>Description : </strong><span th:text="${course.description}"></span></p>
+                <p><strong>Total Active Students : </strong><span th:text="${activeEnrollments.size()}"></span></p>
+            </div>
+        </div>
+        <div class="card shadow">
+            <div class="card-body">
+                <h5 class="card-title">Currently Enrolled Students</h5>
+                <div th:if="${#lists.isEmpty(activeEnrollments)}" class="text-muted text-center py-4">
+                    <i class="fas mb-3"></i>
+                        <p><strong>No students are currently enrolled in this course</strong></p>
+                </div>
+                <div class="table-responsive" th:unless="${#lists.isEmpty(activeEnrollments)}">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile Number</th>
+                                <th>Enrolled Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="enrollment : ${activeEnrollments}">
+                                <td th:text="${enrollment.student.name}"></td>
+                                <td th:text="${enrollment.student.email}"></td>
+                                <td th:text="${enrollment.student.mobileNumber}"></td>
+                                <td>
+                                    <i class="fas"></i>
+                                    <span th:text="${#temporals.format(enrollment.enrolledDate, 'MMM dd, yyyy HH:mm')}"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
